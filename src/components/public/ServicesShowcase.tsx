@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Scissors, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { formatCurrency, formatDuration } from "@/lib/utils";
@@ -32,20 +32,20 @@ export default function ServicesShowcase({ services }: ServicesShowcaseProps) {
   return (
     <div className="space-y-12">
       {/* Grid of services */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
         {services.map((service) => (
           <div
             key={service.id}
-            className="bg-zinc-900/90 border border-zinc-800/90 hover:border-amber-500/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_10px_30px_rgba(245,158,11,0.12)] group hover:-translate-y-1 relative overflow-hidden"
+            className="bg-zinc-900/90 border border-zinc-800/90 hover:border-amber-500/60 rounded-2xl p-5 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_10px_30px_rgba(245,158,11,0.12)] group hover:-translate-y-1 relative overflow-hidden"
           >
             {/* Ambient hover glow */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/0 group-hover:bg-amber-500/5 rounded-full blur-2xl transition-all duration-500 pointer-events-none"></div>
 
             <div>
               {/* Header card */}
-              <div className="flex items-start justify-between mb-5">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-zinc-950 transition-all duration-300">
-                  <Scissors size={22} />
+              <div className="flex items-start justify-between mb-4 sm:mb-5">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-zinc-950 transition-all duration-300 shrink-0">
+                  <Scissors size={20} />
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/70 border border-zinc-700/50 text-zinc-400 text-xs font-medium">
                   <Clock size={13} className="text-amber-500" />
@@ -54,26 +54,26 @@ export default function ServicesShowcase({ services }: ServicesShowcaseProps) {
               </div>
 
               {/* Title & Description */}
-              <h3 className="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-1.5 sm:mb-2">
                 {service.name}
               </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
                 {service.description || "Corte detalhado e finalização de primeira para alinhar o seu visual."}
               </p>
             </div>
 
             {/* Price & Action */}
-            <div className="pt-5 border-t border-zinc-800/80 flex items-center justify-between mt-auto">
+            <div className="pt-4 sm:pt-5 border-t border-zinc-800/80 flex items-center justify-between mt-auto">
               <div>
-                <span className="text-xs text-zinc-500 uppercase tracking-wider block font-semibold">Valor</span>
-                <span className="text-2xl font-extrabold text-amber-500">
+                <span className="text-[11px] text-zinc-500 uppercase tracking-wider block font-semibold">Valor</span>
+                <span className="text-xl sm:text-2xl font-extrabold text-amber-500">
                   {formatCurrency(service.price)}
                 </span>
               </div>
 
               <button
                 onClick={() => handleSelectService(service)}
-                className="px-4 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-zinc-950 border border-amber-500/30 hover:border-amber-500 text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-sm"
+                className="px-4 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-400 hover:text-zinc-950 border border-amber-500/30 hover:border-amber-500 text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-sm active:scale-95"
               >
                 <span>Agendar</span>
                 <ArrowRight size={15} />

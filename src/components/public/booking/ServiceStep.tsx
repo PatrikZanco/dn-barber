@@ -98,10 +98,10 @@ export default function ServiceStep() {
         <button
           onClick={nextStep}
           disabled={!selectedService}
-          className="bg-amber-500 hover:bg-amber-600 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-950 px-8 py-3 rounded-lg font-bold transition-colors flex items-center space-x-2"
+          className="w-full sm:w-auto justify-center bg-amber-500 hover:bg-amber-400 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-950 px-8 py-3.5 rounded-xl font-bold transition-all flex items-center space-x-2 shadow-md active:scale-[0.98]"
         >
-          <span>Próximo Passo</span>
-          <ArrowRight size={20} />
+          <span>Avançar para Barbeiro</span>
+          <ArrowRight size={18} />
         </button>
       </div>
     </div>

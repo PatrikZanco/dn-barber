@@ -178,22 +178,22 @@ export default function BarberDateStep() {
               </h2>
               
               {loadingSlots ? (
-                <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="h-12 bg-zinc-800 rounded-lg animate-pulse"></div>
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5 sm:gap-3">
+                  {[1,2,3,4,5,6].map(i => (
+                    <div key={i} className="h-12 bg-zinc-800 rounded-xl animate-pulse"></div>
                   ))}
                 </div>
               ) : timeSlots.length > 0 ? (
-                <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5 sm:gap-3">
                   {timeSlots.map(t => (
                     <button
                       key={t}
                       onClick={() => setTime(t)}
                       className={cn(
-                        "py-3 rounded-lg border font-medium transition-all text-sm",
+                        "py-3 rounded-xl border font-semibold transition-all text-sm active:scale-95",
                         selectedTime === t
-                          ? "bg-amber-500 border-amber-500 text-zinc-950 shadow-[0_0_10px_rgba(245,158,11,0.3)]"
-                          : "bg-zinc-950 border-zinc-800 text-zinc-300 hover:border-amber-500/50"
+                          ? "bg-amber-500 border-amber-500 text-zinc-950 shadow-[0_0_12px_rgba(245,158,11,0.35)]"
+                          : "bg-zinc-950 border-zinc-800 text-zinc-200 hover:border-amber-500/50"
                       )}
                     >
                       {t}
@@ -201,7 +201,7 @@ export default function BarberDateStep() {
                   ))}
                 </div>
               ) : (
-                <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-950/50 text-zinc-400 text-center">
+                <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-950/50 text-zinc-400 text-center text-sm">
                   Nenhum horário disponível para esta data.
                 </div>
               )}
@@ -210,21 +210,21 @@ export default function BarberDateStep() {
         </div>
       )}
 
-      <div className="flex justify-between pt-6 border-t border-zinc-800">
+      <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-zinc-800">
         <button
           onClick={prevStep}
-          className="text-zinc-400 hover:text-white px-6 py-3 font-medium transition-colors flex items-center space-x-2"
+          className="w-full sm:w-auto justify-center text-zinc-400 hover:text-white px-6 py-3.5 font-medium transition-colors flex items-center space-x-2 rounded-xl border border-zinc-800 sm:border-none"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
           <span>Voltar</span>
         </button>
         <button
           onClick={nextStep}
           disabled={isNextDisabled}
-          className="bg-amber-500 hover:bg-amber-600 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-950 px-8 py-3 rounded-lg font-bold transition-colors flex items-center space-x-2"
+          className="w-full sm:w-auto justify-center bg-amber-500 hover:bg-amber-400 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-950 px-8 py-3.5 rounded-xl font-bold transition-all flex items-center space-x-2 shadow-md active:scale-[0.98]"
         >
-          <span>Próximo Passo</span>
-          <ArrowRight size={20} />
+          <span>Avançar</span>
+          <ArrowRight size={18} />
         </button>
       </div>
     </div>

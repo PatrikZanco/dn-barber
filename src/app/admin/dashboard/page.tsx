@@ -75,16 +75,16 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <span className="text-sm text-zinc-500">
+    <div className="p-3 sm:p-6 space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+        <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h1>
+        <span className="text-xs sm:text-sm text-zinc-500">
           Atualização automática a cada 60s
         </span>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* KPI Cards (2 colunas no mobile para visualização rápida) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <KPICard
           title="Faturamento Hoje"
           value={formatCurrency(data.todayRevenue)}
@@ -112,19 +112,19 @@ export default function DashboardPage() {
       </div>
 
       {/* Chart + Upcoming */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Revenue Chart */}
-        <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">
+        <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">
             Faturamento Semanal
           </h2>
           <RevenueChart data={data.weeklyData} />
         </div>
 
         {/* Upcoming Today */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h2 className="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
               <Clock className="w-5 h-5 text-amber-500" />
               Próximos Clientes
             </h2>

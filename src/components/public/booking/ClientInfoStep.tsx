@@ -93,20 +93,20 @@ export default function ClientInfoStep() {
         </div>
       </div>
 
-      <div className="flex justify-between pt-6 border-t border-zinc-800">
+      <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-zinc-800">
         <button
           onClick={prevStep}
-          className="text-zinc-400 hover:text-white px-6 py-3 font-medium transition-colors flex items-center space-x-2"
+          className="w-full sm:w-auto justify-center text-zinc-400 hover:text-white px-6 py-3.5 font-medium transition-colors flex items-center space-x-2 rounded-xl border border-zinc-800 sm:border-none"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
           <span>Voltar</span>
         </button>
         <button
           onClick={handleNext}
-          className="bg-amber-500 hover:bg-amber-600 text-zinc-950 px-8 py-3 rounded-lg font-bold transition-colors flex items-center space-x-2"
+          className="w-full sm:w-auto justify-center bg-amber-500 hover:bg-amber-400 text-zinc-950 px-8 py-3.5 rounded-xl font-bold transition-all flex items-center space-x-2 shadow-md active:scale-[0.98]"
         >
-          <span>Continuar</span>
-          <ArrowRight size={20} />
+          <span>Revisar Agendamento</span>
+          <ArrowRight size={18} />
         </button>
       </div>
     </div>

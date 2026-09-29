@@ -116,19 +116,19 @@ export default function SummaryStep() {
         </div>
       </div>
 
-      <div className="flex justify-between pt-6 border-t border-zinc-800">
+      <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-zinc-800">
         <button
           onClick={prevStep}
           disabled={isSubmitting}
-          className="text-zinc-400 hover:text-white px-6 py-3 font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
+          className="w-full sm:w-auto justify-center text-zinc-400 hover:text-white px-6 py-3.5 font-medium transition-colors flex items-center space-x-2 disabled:opacity-50 rounded-xl border border-zinc-800 sm:border-none"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
           <span>Voltar</span>
         </button>
         <button
           onClick={handleConfirm}
           disabled={isSubmitting}
-          className="bg-amber-500 hover:bg-amber-600 disabled:bg-amber-500/50 text-zinc-950 px-8 py-3 rounded-lg font-bold transition-colors flex items-center space-x-2"
+          className="w-full sm:w-auto justify-center bg-amber-500 hover:bg-amber-400 disabled:bg-amber-500/50 text-zinc-950 px-8 py-3.5 rounded-xl font-bold transition-all flex items-center space-x-2 shadow-lg shadow-amber-500/20 active:scale-[0.98]"
         >
           {isSubmitting ? (
             <span className="flex items-center">
@@ -138,7 +138,7 @@ export default function SummaryStep() {
           ) : (
             <>
               <span>Confirmar Agendamento</span>
-              <CheckCircle2 size={20} />
+              <CheckCircle2 size={18} />
             </>
           )}
         </button>

@@ -56,18 +56,18 @@ export default async function HomePage() {
   return (
     <div className="bg-zinc-950 text-zinc-100 min-h-screen">
       {/* 1. Cortes & Serviços (Primeira coisa ao acessar o site) */}
-      <section id="servicos" className="pt-28 pb-20 sm:pb-24 bg-zinc-950 relative">
+      <section id="servicos" className="pt-24 sm:pt-28 pb-14 sm:pb-24 bg-zinc-950 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2 sm:mb-3">
               <Scissors size={14} />
               <span>Nossos Serviços</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-5xl font-extrabold text-white tracking-tight">
               Escolha seu Serviço
             </h1>
-            <div className="w-16 h-1 bg-amber-500 mx-auto rounded-full mt-4 mb-5"></div>
-            <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
+            <div className="w-14 sm:w-16 h-1 bg-amber-500 mx-auto rounded-full mt-3 sm:mt-4 mb-4 sm:mb-5"></div>
+            <p className="text-zinc-400 text-sm sm:text-lg leading-relaxed">
               Confira os serviços disponíveis e clique em agendar para escolher seu profissional e horário:
             </p>
           </div>
@@ -77,18 +77,18 @@ export default async function HomePage() {
       </section>
 
       {/* 2. Agende seu Horário (Fluxo Interativo) */}
-      <section id="agendar" className="py-20 sm:py-24 bg-zinc-900/60 relative border-t border-zinc-800/80">
+      <section id="agendar" className="py-14 sm:py-24 bg-zinc-900/60 relative border-t border-zinc-800/80">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2 sm:mb-3">
               <Clock size={14} />
               <span>Agendamento Rápido</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-5xl font-extrabold text-white tracking-tight">
               Reserve seu Horário
             </h2>
-            <div className="w-16 h-1 bg-amber-500 mx-auto rounded-full mt-4 mb-5"></div>
-            <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
+            <div className="w-14 sm:w-16 h-1 bg-amber-500 mx-auto rounded-full mt-3 sm:mt-4 mb-4 sm:mb-5"></div>
+            <p className="text-zinc-400 text-sm sm:text-lg leading-relaxed">
               Escolha o barbeiro, a data e a hora ideal pra você. Sem fila, sem estresse e com confirmação na hora!
             </p>
           </div>
@@ -269,7 +269,7 @@ export default async function HomePage() {
             </div>
 
             {/* Iframe Interativo do Google Maps */}
-            <div className="w-full h-[400px] sm:h-[480px] bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden relative shadow-2xl">
+            <div className="w-full h-[280px] sm:h-[480px] bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden relative shadow-2xl">
               <iframe
                 src="https://maps.google.com/maps?q=R.+Mar+Del+Plata,+843+-+Barreiros,+S%C3%A3o+Jos%C3%A9+-+SC,+88117-410&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"

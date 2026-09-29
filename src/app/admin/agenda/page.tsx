@@ -161,12 +161,12 @@ export default function AgendaPage() {
       <div className="flex-1 space-y-6">
         
         {/* Header & Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-4 order-2 sm:order-1">
             <select 
               value={filterBarberId}
               onChange={(e) => setFilterBarberId(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-100 focus:border-amber-500 focus:outline-none w-full sm:w-auto"
+              className="bg-zinc-900 border border-zinc-800 rounded-xl px-3 sm:px-4 py-2 text-sm text-zinc-100 focus:border-amber-500 focus:outline-none flex-1 sm:w-auto"
             >
               <option value="ALL">Todos os Barbeiros</option>
               {barbers.map(b => (
@@ -175,20 +175,20 @@ export default function AgendaPage() {
             </select>
             <button 
               onClick={goToToday}
-              className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors whitespace-nowrap text-zinc-100"
+              className="px-3.5 py-2 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs sm:text-sm font-bold text-amber-400 hover:bg-amber-500/20 transition-colors whitespace-nowrap active:scale-95"
             >
               Hoje
             </button>
           </div>
 
-          <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+          <div className="flex items-center justify-between gap-2 order-1 sm:order-2 bg-zinc-900/60 p-1.5 sm:p-0 rounded-xl border border-zinc-800 sm:border-none">
             <button 
               onClick={goToPrevMonth}
               className="p-2 hover:bg-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-100 transition-colors"
             >
               <ChevronLeft size={20} />
             </button>
-            <h2 className="text-lg font-semibold text-zinc-100 w-40 text-center">
+            <h2 className="text-base sm:text-lg font-bold text-zinc-100 min-w-36 text-center">
               {MONTHS[currentMonth]} {currentYear}
             </h2>
             <button 
@@ -201,30 +201,40 @@ export default function AgendaPage() {
         </div>
 
         {/* Mobile: Horizontal Day List */}
-        <div className="md:hidden flex overflow-x-auto gap-2 pb-2 snap-x">
-          {currentMonthDays.map((day, i) => {
+        <div className="md:hidden flex overflow-x-auto gap-2 pb-2 snap-x scroll-smooth">
+          {currentMonthDays.map((day) => {
             const hasAppts = appointmentsByDate[day.dateString]?.length > 0;
+            const apptCount = appointmentsByDate[day.dateString]?.length || 0;
             const isSelected = day.dateString === selectedDate;
             
             return (
               <button
                 key={day.dateString}
-                onClick={() => setSelectedDate(day.dateString)}
-                className={`snap-center flex-shrink-0 flex flex-col items-center justify-center w-16 h-20 rounded-xl border transition-all
+                id={`day-btn-${day.dateString}`}
+                onClick={() => {
+                  setSelectedDate(day.dateString);
+                  const btn = document.getElementById(`day-btn-${day.dateString}`);
+                  btn?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }}
+                className={`snap-center shrink-0 flex flex-col items-center justify-center w-16 h-20 rounded-xl border transition-all active:scale-95
                   ${isSelected 
-                    ? 'border-amber-500 bg-amber-500/10' 
+                    ? 'border-amber-500 bg-amber-500/15 shadow-[0_0_12px_rgba(245,158,11,0.25)]' 
                     : 'border-zinc-800 bg-zinc-900 hover:border-zinc-700'
                   }
                   ${day.isToday && !isSelected ? 'ring-1 ring-amber-500/50' : ''}
                 `}
               >
-                <span className="text-xs text-zinc-400 font-medium mb-1">{DAYS_SHORT[day.date.getDay()]}</span>
+                <span className="text-[11px] text-zinc-400 font-medium mb-0.5">{DAYS_SHORT[day.date.getDay()]}</span>
                 <span className={`text-xl font-bold ${isSelected ? 'text-amber-500' : 'text-zinc-100'}`}>
                   {day.date.getDate()}
                 </span>
-                <div className="h-1.5 mt-1">
-                  {hasAppts && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <div className="h-4 mt-0.5 flex items-center justify-center">
+                  {hasAppts ? (
+                    <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500 text-zinc-950">
+                      {apptCount}
+                    </span>
+                  ) : (
+                    <span className="text-[9px] text-zinc-600">-</span>
                   )}
                 </div>
               </button>
@@ -370,28 +380,28 @@ export default function AgendaPage() {
                     {appt.status === 'CONFIRMED' || appt.status === 'PENDING' || appt.status === 'SCHEDULED' ? (
                       <button 
                         onClick={() => updateStatus(appt.id, 'IN_PROGRESS')}
-                        className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 text-xs font-medium bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-md transition-colors"
+                        className="flex-1 min-h-[42px] flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-semibold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/30 rounded-xl transition-all active:scale-[0.98]"
                       >
-                        <Play size={14} /> Iniciar
+                        <Play size={15} /> Iniciar Atendimento
                       </button>
                     ) : null}
                     
                     {appt.status === 'IN_PROGRESS' ? (
                       <button 
                         onClick={() => updateStatus(appt.id, 'COMPLETED')}
-                        className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 text-xs font-medium bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 rounded-md transition-colors"
+                        className="flex-1 min-h-[42px] flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-semibold bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/30 rounded-xl transition-all active:scale-[0.98]"
                       >
-                        <Check size={14} /> Concluir
+                        <Check size={16} /> Concluir Corte
                       </button>
                     ) : null}
 
                     {['PENDING', 'CONFIRMED', 'SCHEDULED', 'IN_PROGRESS'].includes(appt.status) ? (
                       <button 
                         onClick={() => updateStatus(appt.id, 'CANCELLED')}
-                        className="flex items-center justify-center p-1.5 text-red-500 hover:bg-red-500/10 rounded-md transition-colors"
+                        className="min-h-[42px] min-w-[42px] flex items-center justify-center p-2 text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-xl transition-all active:scale-[0.98]"
                         title="Cancelar Agendamento"
                       >
-                        <X size={16} />
+                        <X size={18} />
                       </button>
                     ) : null}
                   </div>

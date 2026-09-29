@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { Check, Scissors, Calendar, Clock, User, CheckCircle } from "lucide-react";
@@ -83,8 +83,14 @@ export default function BookingSection() {
         </div>
       </div>
 
+      {/* Mobile Step Title Badge */}
+      <div className="sm:hidden flex items-center justify-between px-1 mb-3 text-xs bg-zinc-900/80 border border-zinc-800 rounded-lg py-2 px-3">
+        <span className="text-zinc-400 font-medium">Passo {step} de {STEPS.length}</span>
+        <span className="text-amber-400 font-bold">{STEPS[step - 1]?.title}</span>
+      </div>
+
       {/* Step Container */}
-      <div className="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm relative overflow-hidden">
+      <div className="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 sm:p-8 shadow-2xl backdrop-blur-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
         {step === 1 && <ServiceStep />}
         {step === 2 && <BarberDateStep />}

@@ -124,14 +124,14 @@ export default function ServicosPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-100">Gerenciar Serviços</h1>
-          <p className="text-zinc-400 text-sm mt-1">Cadastre e altere os serviços disponíveis para agendamento</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-zinc-100">Gerenciar Serviços</h1>
+          <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Cadastre e altere os serviços disponíveis para agendamento</p>
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="bg-amber-500 hover:bg-amber-600 text-zinc-900 font-semibold rounded-lg px-4 py-2.5 flex items-center gap-2 transition-colors ml-auto md:ml-0"
+          className="w-full sm:w-auto justify-center bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold rounded-xl px-5 py-3 flex items-center gap-2 transition-colors shadow-md text-sm"
         >
           <Plus size={20} />
           <span>Novo Serviço</span>
@@ -151,66 +151,119 @@ export default function ServicosPage() {
             <p className="text-sm text-zinc-600 mt-1">Clique em "Novo Serviço" para começar.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/50">
-                  <th className="px-6 py-4 text-sm font-medium text-zinc-400">Nome</th>
-                  <th className="px-6 py-4 text-sm font-medium text-zinc-400">Preço</th>
-                  <th className="px-6 py-4 text-sm font-medium text-zinc-400">Duração</th>
-                  <th className="px-6 py-4 text-sm font-medium text-zinc-400">Status</th>
-                  <th className="px-6 py-4 text-sm font-medium text-zinc-400 text-right">Ações</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-800">
-                {services.map((service) => (
-                  <tr key={service.id} className="hover:bg-zinc-800/50 transition-colors">
-                    <td className="px-6 py-4 text-sm font-medium text-zinc-100 flex items-center gap-3">
-                      <div className="w-8 h-8 rounded bg-amber-500/10 text-amber-500 flex items-center justify-center flex-shrink-0">
-                        <Scissors size={16} />
+          <>
+            {/* Visualização em Cards para Mobile */}
+            <div className="md:hidden divide-y divide-zinc-800">
+              {services.map((service) => (
+                <div key={service.id} className="p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+                        <Scissors size={18} />
                       </div>
-                      <span>{service.name}</span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-zinc-300 font-semibold text-amber-400">
+                      <div>
+                        <h3 className="text-sm font-semibold text-zinc-100">{service.name}</h3>
+                        <p className="text-xs text-zinc-400 mt-0.5">{formatDuration(service.durationMinutes)}</p>
+                      </div>
+                    </div>
+                    <span
+                      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium shrink-0 ${
+                        service.active
+                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                          : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                      }`}
+                    >
+                      {service.active ? 'Ativo' : 'Inativo'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="text-lg font-bold text-amber-400">
                       {formatCurrency(service.price)}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-zinc-300">
-                      {formatDuration(service.durationMinutes)}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                          service.active
-                            ? 'bg-emerald-500/10 text-emerald-500'
-                            : 'bg-zinc-700/50 text-zinc-400'
-                        }`}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleOpenModal(service)}
+                        className="px-3 py-1.5 text-xs font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg flex items-center gap-1.5 transition-colors"
                       >
-                        {service.active ? 'Ativo' : 'Inativo'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleOpenModal(service)}
-                          className="p-1.5 text-zinc-400 hover:text-amber-500 hover:bg-amber-500/10 rounded-md transition-colors"
-                          title="Editar"
-                        >
-                          <Edit2 size={18} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(service.id)}
-                          className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-colors"
-                          title="Excluir"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
+                        <Edit2 size={13} className="text-amber-400" />
+                        <span>Editar</span>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(service.id)}
+                        className="px-3 py-1.5 text-xs font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-lg flex items-center gap-1.5 transition-colors"
+                      >
+                        <Trash2 size={13} />
+                        <span>Excluir</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tabela para Desktop */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-zinc-800 bg-zinc-900/50">
+                    <th className="px-6 py-4 text-sm font-medium text-zinc-400">Nome</th>
+                    <th className="px-6 py-4 text-sm font-medium text-zinc-400">Preço</th>
+                    <th className="px-6 py-4 text-sm font-medium text-zinc-400">Duração</th>
+                    <th className="px-6 py-4 text-sm font-medium text-zinc-400">Status</th>
+                    <th className="px-6 py-4 text-sm font-medium text-zinc-400 text-right">Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-zinc-800">
+                  {services.map((service) => (
+                    <tr key={service.id} className="hover:bg-zinc-800/50 transition-colors">
+                      <td className="px-6 py-4 text-sm font-medium text-zinc-100 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded bg-amber-500/10 text-amber-500 flex items-center justify-center flex-shrink-0">
+                          <Scissors size={16} />
+                        </div>
+                        <span>{service.name}</span>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-zinc-300 font-semibold text-amber-400">
+                        {formatCurrency(service.price)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-zinc-300">
+                        {formatDuration(service.durationMinutes)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                            service.active
+                              ? 'bg-emerald-500/10 text-emerald-500'
+                              : 'bg-zinc-700/50 text-zinc-400'
+                          }`}
+                        >
+                          {service.active ? 'Ativo' : 'Inativo'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleOpenModal(service)}
+                            className="p-1.5 text-zinc-400 hover:text-amber-500 hover:bg-amber-500/10 rounded-md transition-colors"
+                            title="Editar"
+                          >
+                            <Edit2 size={18} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(service.id)}
+                            className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-colors"
+                            title="Excluir"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 

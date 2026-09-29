@@ -266,29 +266,29 @@ export default function ConfigPage() {
                     </div>
 
                     {!isClosed ? (
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs text-zinc-400">Abertura:</span>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <div className="flex items-center gap-1.5 flex-1 min-w-[130px]">
+                          <span className="text-xs text-zinc-400">Abre:</span>
                           <input
                             type="time"
                             value={dayHour.open}
                             onChange={(e) => handleHourChange(day.key, 'open', e.target.value)}
-                            className="bg-zinc-800 border border-zinc-700 rounded px-2.5 py-1 text-sm text-zinc-100 focus:border-amber-500 focus:outline-none"
+                            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-sm text-zinc-100 focus:border-amber-500 focus:outline-none flex-1"
                           />
                         </div>
-                        <span className="text-zinc-600">—</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs text-zinc-400">Fechamento:</span>
+                        <span className="text-zinc-600 hidden sm:inline">—</span>
+                        <div className="flex items-center gap-1.5 flex-1 min-w-[130px]">
+                          <span className="text-xs text-zinc-400">Fecha:</span>
                           <input
                             type="time"
                             value={dayHour.close}
                             onChange={(e) => handleHourChange(day.key, 'close', e.target.value)}
-                            className="bg-zinc-800 border border-zinc-700 rounded px-2.5 py-1 text-sm text-zinc-100 focus:border-amber-500 focus:outline-none"
+                            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-sm text-zinc-100 focus:border-amber-500 focus:outline-none flex-1"
                           />
                         </div>
                       </div>
                     ) : (
-                      <span className="text-xs font-medium text-red-400/80 bg-red-500/10 px-2.5 py-1 rounded">
+                      <span className="text-xs font-semibold text-red-400/90 bg-red-500/10 px-3 py-1 rounded-md border border-red-500/20 w-fit">
                         Fechado
                       </span>
                     )}
@@ -299,16 +299,16 @@ export default function ConfigPage() {
           </div>
         )}
 
-        <div className="flex justify-end">
+        <div className="flex justify-end pt-2">
           <button
             type="submit"
             disabled={saving}
-            className="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-zinc-900 font-semibold rounded-lg px-6 py-2.5 flex items-center gap-2 transition-colors"
+            className="w-full sm:w-auto justify-center bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-zinc-950 font-bold rounded-xl px-6 py-3.5 flex items-center gap-2 transition-all shadow-md active:scale-[0.98]"
           >
             {saving ? (
               <>
                 <Loader2 className="animate-spin" size={18} />
-                <span>Salvando...</span>
+                <span>Salvando alterações...</span>
               </>
             ) : (
               <>
