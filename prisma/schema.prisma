@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum UserRole {
+  ADMIN
+  MANAGER
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// ============================================================
+// MODELS
+// ============================================================
+
+/// Usuários administradores do painel
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(ADMIN)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+/// Profissionais (barbeiros)
+model Barber {
+  id           String   @id @default(cuid())
+  name         String
+  photo        String?
+  specialty    String?
+  active       Boolean  @default(true)
+  /// JSON: { "monday": { "start": "08:00", "end": "18:00" }, ... }
+  workSchedule Json     @default("{}") @map("work_schedule")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  appointments Appointment[]
+  services     BarberService[]
+
+  @@map("barbers")
+}
+
+/// Serviços oferecidos (cortes, tratamentos, etc.)
+model Service {
+  id              String   @id @default(cuid())
+  name            String
+  price           Decimal  @db.Decimal(10, 2)
+  durationMinutes Int      @map("duration_minutes")
+  icon            String?
+  photo           String?
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  appointments Appointment[]
+  barbers      BarberService[]
+
+  @@map("services")
+}
+
+/// Relação N:N entre barbeiros e serviços
+model BarberService {
+  barberId  String  @map("barber_id")
+  serviceId String  @map("service_id")
+  barber    Barber  @relation(fields: [barberId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([barberId, serviceId])
+  @@map("barber_services")
+}
+
+/// Clientes que fazem agendamentos
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  whatsapp  String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  appointments Appointment[]
+
+  @@map("clients")
+}
+
+/// Agendamentos
+model Appointment {
+  id        String            @id @default(cuid())
+  clientId  String            @map("client_id")
+  barberId  String            @map("barber_id")
+  serviceId String            @map("service_id")
+  dateTime  DateTime          @map("date_time")
+  endTime   DateTime          @map("end_time")
+  status    AppointmentStatus @default(SCHEDULED)
+  price     Decimal           @db.Decimal(10, 2)
+  notes     String?
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+
+  client  Client  @relation(fields: [clientId], references: [id])
+  barber  Barber  @relation(fields: [barberId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@index([barberId, dateTime])
+  @@index([clientId])
+  @@index([dateTime])
+  @@index([status])
+  @@map("appointments")
+}
+
+/// Imagens da galeria pública
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("gallery_images")
+}
+
+/// Configurações gerais da barbearia (singleton)
+model ShopSettings {
+  id           String   @id @default("main")
+  shopName     String   @default("DN Barbearia") @map("shop_name")
+  phone        String   @default("")
+  whatsapp     String   @default("")
+  address      String   @default("")
+  instagram    String   @default("")
+  facebook     String   @default("")
+  /// JSON: { "monday": { "open": "08:00", "close": "20:00" }, ... }
+  workingHours Json     @default("{}") @map("working_hours")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("shop_settings")
+}
